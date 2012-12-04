@@ -1,11 +1,7 @@
-# Lightbulb CMS
+# Archonaut
 
-Lightbulb CMS is a very light CMS.
-
-```
-(~)
- #
-```
+Experimental CMS based on [Archive.org](http://archive.org/)  
+Archonaut itself is a fork of [Lightbulb](https://github.com/lisezmoi/lightbulb).
 
 ## Installation
 
@@ -15,9 +11,8 @@ Lightbulb CMS is a very light CMS.
 
 ## Usage
 
-- Add your titles / image couples to the `posts.txt` file.
-- Optionally, run `/cache.php` after each posts.txt edit, to update the image dimensions cache. Make sure that the `cache.db` file can be written by the server.
+- Add by couples: titles and URL from archive.org documents to the `posts.txt` file.
 
 ## License
 
-Lightbulb CMS is licensed under the GPLv3 (or later), see the [LICENSE file](https://github.com/lisezmoi/lightbulb/blob/master/LICENSE) for details.
+Archonaut is licensed under the GPLv3 (or later), see the [LICENSE file](https://github.com/lisezmoi/lightbulb/blob/master/LICENSE) for details.

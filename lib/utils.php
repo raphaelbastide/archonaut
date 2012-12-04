@@ -28,6 +28,20 @@ function write_cached_posts($posts) {
   return file_put_contents($cache_file, serialize($posts));
 }
 
+function get_url_data($url){
+  $archpath = parse_url($url, PHP_URL_PATH);
+  $re1='.*?';	# Non-greedy match on filler
+  $re2='(details)';
+  $re3='.*?';	# Non-greedy match on filler
+  $re4='((?:[a-z][a-z0-9_]*))';	# archslug
+  if ($c=preg_match_all ("/".$re1.$re2.$re3.$re4."/is", $archpath, $matches))
+  {
+      $word1=$matches[1][0];
+      $archslug=$matches[2][0];
+      return($archslug);
+  }
+}
+
 /* Read, transforms and return posts */
 function get_posts() {
   $raw_posts = file_get_contents(__DIR__.'/../posts.txt');
@@ -42,17 +56,26 @@ function get_posts() {
         'title' => $value,
         'slug' => $post_key,
       );
-    // Image
+    // URL
     } else {
       $post_key = slugify($posts_lines[$key-1]);
-      $posts[$post_key]['image'] = (object)array(
-        'src' => $value,
-        'width' => NULL,
-        'height' => NULL,
-        'html_attributes' => NULL,
+      $archslug = get_url_data($value);
+      $posts[$post_key]['archurl'] = (object)array(
+        'metafile' => "https://archive.org/download/".$archslug."/".$archslug."_meta.xml"
       );
       $posts[$post_key] = (object)$posts[$post_key];
     }
+    // Image
+    // } else {
+    //   $post_key = slugify($posts_lines[$key-1]);
+    //   $posts[$post_key]['image'] = (object)array(
+    //     'src' => $value,
+    //     'width' => NULL,
+    //     'height' => NULL,
+    //     'html_attributes' => NULL,
+    //   );
+    //   $posts[$post_key] = (object)$posts[$post_key];
+    // }
   }
 
   // Cached dimensions
