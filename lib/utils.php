@@ -28,18 +28,33 @@ function write_cached_posts($posts) {
   return file_put_contents($cache_file, serialize($posts));
 }
 
+/* URL DATA */
 function get_url_data($url){
   $archpath = parse_url($url, PHP_URL_PATH);
   $re1='.*?';	# Non-greedy match on filler
   $re2='(details)';
   $re3='.*?';	# Non-greedy match on filler
-  $re4='((?:[a-z][a-z0-9_]*))';	# archslug
+  $re4='((?:\\/[\\w\\.\\-]+)+)';	# Unix Path: archslug
   if ($c=preg_match_all ("/".$re1.$re2.$re3.$re4."/is", $archpath, $matches))
   {
       $word1=$matches[1][0];
       $archslug=$matches[2][0];
       return($archslug);
   }
+}
+
+/* XML Parser */
+
+function xml_eye($url){
+  $xml = simplexml_load_file($url);
+  $title = $xml->title;
+  $author = $xml->author;
+  $type = $xml->mediatype;
+  $description = $xml->description;
+  $date_created = $xml->date_created;
+  $date_publicated = $xml->publicdate;
+  $content = array($title, $author);
+  return($content);
 }
 
 /* Read, transforms and return posts */
@@ -59,9 +74,15 @@ function get_posts() {
     // URL
     } else {
       $post_key = slugify($posts_lines[$key-1]);
-      $archslug = get_url_data($value);
+      $doc_url = $value;
+      $archslug = get_url_data($doc_url);
+      $xml_url = "https://archive.org/download".$archslug.$archslug."_meta.xml";
+      $xml_data = xml_eye($xml_url);
       $posts[$post_key]['archurl'] = (object)array(
-        'metafile' => "https://archive.org/download/".$archslug."/".$archslug."_meta.xml"
+        'xml_url' => $xml_url,
+        'title' => $xml_data[0],
+        'authorname' => $xml_data[1],
+        'doc_url' => $doc_url
       );
       $posts[$post_key] = (object)$posts[$post_key];
     }
