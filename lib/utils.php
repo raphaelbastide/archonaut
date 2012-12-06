@@ -45,16 +45,29 @@ function get_url_data($url){
 
 /* XML Parser */
 
-function xml_eye($url){
+function xml_eye($url, $datatype){
   $xml = simplexml_load_file($url);
-  $title = $xml->title;
-  $author = $xml->author;
-  $type = $xml->mediatype;
-  $description = $xml->description;
-  $date_created = $xml->date_created;
-  $date_publicated = $xml->publicdate;
-  $content = array($title, $author);
-  return($content);
+  if($datatype === "data"){
+    $title = $xml->title;
+    $author = $xml->author;
+    $type = $xml->mediatype;
+    $description = $xml->description;
+    $date_created = $xml->date_created;
+    $date_publicated = $xml->publicdate;    
+    $content = array($title, $author, $type, $description, $date_created);
+    return($content);
+  }else if($datatype === "files"){
+    foreach ($xml->file as $file) {
+      $file_name = $file["name"];
+      $file_source = $file["source"];
+      if($file_source != "original"){
+        continue;
+      }else{ // It needs a better way to target the main media (video derivative…)
+        $content = $file_name;
+        return($content);
+      }
+    }
+  }
 }
 
 /* Read, transforms and return posts */
@@ -76,29 +89,20 @@ function get_posts() {
       $post_key = slugify($posts_lines[$key-1]);
       $doc_url = $value;
       $archslug = get_url_data($doc_url);
-      $xml_url = "https://archive.org/download".$archslug.$archslug."_meta.xml";
-      $xml_data = xml_eye($xml_url);
+      $xml_data_url = "https://archive.org/download".$archslug.$archslug."_meta.xml";
+      $xml_files_url = "https://archive.org/download".$archslug.$archslug."_files.xml";
+      $xml_data = xml_eye($xml_data_url, "data");
+      $xml_files = xml_eye($xml_files_url, "files");
       $posts[$post_key]['archurl'] = (object)array(
-        'xml_url' => $xml_url,
+        'xml_url' => $xml_data_url,
         'title' => $xml_data[0],
         'authorname' => $xml_data[1],
-        'doc_url' => $doc_url
+        'files_url' => "https://archive.org/download/".$archslug."/".$xml_files,
+        'doc_url' => $doc_url,
       );
       $posts[$post_key] = (object)$posts[$post_key];
     }
-    // Image
-    // } else {
-    //   $post_key = slugify($posts_lines[$key-1]);
-    //   $posts[$post_key]['image'] = (object)array(
-    //     'src' => $value,
-    //     'width' => NULL,
-    //     'height' => NULL,
-    //     'html_attributes' => NULL,
-    //   );
-    //   $posts[$post_key] = (object)$posts[$post_key];
-    // }
   }
-
   // Cached dimensions
   $cached_posts = get_cached_posts();
   array_walk($posts, function(&$post, $slug) use($cached_posts) {

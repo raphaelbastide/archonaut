@@ -4,10 +4,11 @@
 		<li>
 			<article>
 				<h1><?php echo $post->archurl->title ?></h1>
-        <!-- <img src="<?php echo $post->image->src ?>" alt="<?php echo $post->title ?>" width="<?php echo $post->image->width ?>" height="<?php echo $post->image->height ?>" /> -->
         				<ul>
                   <li>Title: <?php echo $post->archurl->title ?></li>
                   <li>Author: <?php echo $post->archurl->authorname ?></li>
+                  <li>File : <img src="<?php echo $post->archurl->files_url ?>" /></li>
+                  
                   <li><a href="<?php echo $post->archurl->doc_url ?>">URL source</a></li>
                   <li><a href="<?php echo $post->archurl->xml_url ?>">XML source</a></li>
                 </ul>
