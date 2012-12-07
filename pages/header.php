@@ -9,7 +9,7 @@
 <body>
   <p role="banner">
     <a href="<?php echo SITE_URL ?>">
-      Achonaut
+      <h1>Achonaut</h1>
     </a>
   </p>
   <div class="main">

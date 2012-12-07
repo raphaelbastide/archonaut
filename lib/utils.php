@@ -91,12 +91,16 @@ function get_posts() {
       $archslug = get_url_data($doc_url);
       $xml_data_url = "https://archive.org/download".$archslug.$archslug."_meta.xml";
       $xml_files_url = "https://archive.org/download".$archslug.$archslug."_files.xml";
+      // Uncomment for debug
+      //$xml_data_url = "http://localhost/PERSO/archonaut-WBM/archonaut/debug/An_Animation_Of_Me_lol_meta.xml";
+      //$xml_files_url = "http://localhost/PERSO/archonaut-WBM/archonaut/debug/An_Animation_Of_Me_lol_files.xml";
       $xml_data = xml_eye($xml_data_url, "data");
       $xml_files = xml_eye($xml_files_url, "files");
       $posts[$post_key]['archurl'] = (object)array(
         'xml_url' => $xml_data_url,
         'title' => $xml_data[0],
         'authorname' => $xml_data[1],
+        'creation_date' => $xml_data[4],
         'files_url' => "https://archive.org/download/".$archslug."/".$xml_files,
         'doc_url' => $doc_url,
       );
