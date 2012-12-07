@@ -1,5 +1,7 @@
 # Archonaut
 
+![Archonaut logo](/ui/img/archonaut-logo.png)
+
 Experimental CMS based on [Archive.org](http://archive.org/)  
 Archonaut itself is a fork of [Lightbulb](https://github.com/lisezmoi/lightbulb).
 
