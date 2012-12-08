@@ -6,7 +6,7 @@ Archonaut itself is a fork of [Lightbulb](https://github.com/lisezmoi/lightbulb)
 
 ## Logo
 
-![Archonaut logo](https://raw.github.com/raphaelbastide/lightbulb/archonaut/ui/img/archonaut-logo.png)
+![Archonaut logo](https://raw.github.com/raphaelbastide/archonaut/master/ui/img/archonaut-logo.png)
 
 ## Installation
 
