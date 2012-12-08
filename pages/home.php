@@ -23,8 +23,9 @@
           <li>
             <label>Sources</label>
             <ul class="sources">
-              <li><a href="<?php echo $post->archurl->doc_url ?>">URL source</a></li>
-              <li><a href="<?php echo $post->archurl->xml_url ?>">XML source</a></li>
+              <li><a href="<?php echo $post->archurl->doc_url ?>">Main URL</a></li>
+              <li><a href="<?php echo $post->archurl->xml_url ?>">Data XML</a></li>
+              <li><a href="<?php echo $post->archurl->xml_url ?>">F XML</a></li>
             </ul>
           </li>
 			</article>

@@ -60,9 +60,8 @@ function xml_eye($url, $datatype){
     foreach ($xml->file as $file) {
       $file_name = $file["name"];
       $file_source = $file["source"];
-      if($file_source != "original"){
-        continue;
-      }else{ // It needs a better way to target the main media (video derivative…)
+      $file_format = $file->format;
+      if($file_format == "GIF" | $file_format == "gif" | $file_format == "Animated GIF"){
         $content = $file_name;
         return($content);
       }
@@ -101,7 +100,8 @@ function get_posts() {
         'title' => $xml_data[0],
         'authorname' => $xml_data[1],
         'creation_date' => $xml_data[4],
-        'files_url' => "https://archive.org/download/".$archslug."/".$xml_files,
+        'file_url' => "https://archive.org/download/".$archslug."/".$xml_files,
+        'files_url' => $xml_files_url,
         'doc_url' => $doc_url,
       );
       $posts[$post_key] = (object)$posts[$post_key];
