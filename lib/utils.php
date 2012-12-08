@@ -96,13 +96,13 @@ function get_posts() {
       $xml_data = xml_eye($xml_data_url, "data");
       $xml_files = xml_eye($xml_files_url, "files");
       $posts[$post_key]['archurl'] = (object)array(
-        'xml_url' => $xml_data_url,
         'title' => $xml_data[0],
         'authorname' => $xml_data[1],
         'creation_date' => $xml_data[4],
-        'file_url' => "https://archive.org/download/".$archslug."/".$xml_files,
-        'files_url' => $xml_files_url,
+        'main_file_url' => "https://archive.org/download/".$archslug."/".$xml_files,
         'doc_url' => $doc_url,
+        'data_url' => $xml_data_url,
+        'files_url' => $xml_files_url,
       );
       $posts[$post_key] = (object)$posts[$post_key];
     }

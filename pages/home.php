@@ -18,14 +18,14 @@
           </li>
           <li>
             <label>File</label>
-            <p><img src="<?php echo $post->archurl->files_url ?>" /></p>
+            <p><img src="<?php echo $post->archurl->main_file_url ?>" /></p>
           </li>
           <li>
             <label>Sources</label>
             <ul class="sources">
               <li><a href="<?php echo $post->archurl->doc_url ?>">Main URL</a></li>
-              <li><a href="<?php echo $post->archurl->xml_url ?>">Data XML</a></li>
-              <li><a href="<?php echo $post->archurl->xml_url ?>">F XML</a></li>
+              <li><a href="<?php echo $post->archurl->data_url ?>">Data XML</a></li>
+              <li><a href="<?php echo $post->archurl->files_url ?>">Files XML</a></li>
             </ul>
           </li>
 			</article>
